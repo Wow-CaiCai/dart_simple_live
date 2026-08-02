@@ -10,6 +10,12 @@ set(BINARY_NAME "simple_live_app")
 # versions of CMake.
 cmake_policy(VERSION 3.14...3.25)
 
+# Enable C++ coroutines support on MSVC to satisfy dependencies that include
+# <experimental/coroutine>.
+if(MSVC)
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/await>)
+endif()
+
 # Define build configuration option.
 get_property(IS_MULTICONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 if(IS_MULTICONFIG)
